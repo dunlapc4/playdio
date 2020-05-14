@@ -1,8 +1,9 @@
 from playsound import playsound
 import sample
+import sawtooth
 
-fileName = 'sin'
+fileName = 'sample'
 
-sample.sinWav(fileName)
+sawtooth.sawWav(fileName)
 
 playsound(fileName + '.wav')
