@@ -12,7 +12,6 @@ def sawWav(fileName):
         frames = f.getnframes()
         rate = f.getframerate()
         duration = frames / float(rate)
-    print("duration: ", duration)
 
     obj = wave.open(fileName + '_sawtooth.wav', 'wb')
     obj.setnchannels(1)  # set mono
