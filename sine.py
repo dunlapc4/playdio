@@ -10,14 +10,14 @@ def sinWav(fileName):
     maxVol = 32767.0            # Volume
     quarterAmp = maxVol * .25   # Amplitude
 
-    objS = wave.open(fileName + '.wav', 'wb')
-    objS.setnchannels(1)  # set mono
-    objS.setsampwidth(2)  # set to 16-bits
-    objS.setframerate(sampleRate)
+    obj = wave.open(fileName + '.wav', 'wb')
+    obj.setnchannels(1)  # set mono
+    obj.setsampwidth(2)  # set to 16-bits
+    obj.setframerate(sampleRate)
 
     for i in range(int(duration * sampleRate)):
         sample = int(quarterAmp * math.sin(freq * math.pi * 2 * float(i) / float(sampleRate)))
         data = struct.pack('<h', sample)
-        objS.writeframesraw(data)
+        obj.writeframesraw(data)
 
-    objS.close()
+    obj.close()
