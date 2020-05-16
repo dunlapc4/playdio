@@ -1,10 +1,9 @@
 from scipy.io import wavfile
 import wave
-import os
 
 def file_input(fileName):
 
-    fs, data = wavfile.read(fileName + '.wav', 'r')
+    fs, data = wavfile.read('audioclips/' + fileName + '.wav', 'r')
 
     obj = wave.open(fileName + '.wav', 'wb')
     obj.setnchannels(1)     # sets mono
