@@ -24,6 +24,6 @@ def file_output(fileName, fs, data):
 
     duration = len(data)/(fs * numChan * bitDepth)
 
-    for i in range(int(duration * fs)):
-        obj.writeframesraw(data)
+    obj.writeframesraw(data)
     obj.close()
+
