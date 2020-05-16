@@ -1,8 +1,6 @@
 # This is a synthesizer filter for adding sine waves of a given
 # duration, sample rate and frequency
 
-# The project might soon need directories that categorize filter types
-
 import struct
 import math
 import fileIO
@@ -18,4 +16,3 @@ def sinWav(fileName, duration, fs, freq, level):
         data.extend(struct.pack('<h', sample))
 
     fileIO.file_output(fileName, fs, data)
-

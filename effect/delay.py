@@ -19,7 +19,4 @@ def delay(fileName, mix, feedback, tempo):
     end = audio_bytes[:-offset]
     data = add(audio_bytes, beginning+end, params.sampwidth)
 
-    print(type(data))
-    print(data)
-
     fileIO.file_output('delay', fs, data)
