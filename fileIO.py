@@ -1,5 +1,6 @@
 from scipy.io import wavfile
 import wave
+import os
 
 def file_input(fileName):
 
@@ -15,7 +16,7 @@ def file_input(fileName):
 def file_output(fileName, fs, data):
 
     numChan = 1
-    obj = wave.open(fileName + '.wav', 'wb')
+    obj = wave.open('audioclips/' + fileName + '.wav', 'wb')
     obj.setnchannels(numChan)   # sets mono
     obj.setsampwidth(2)         # sets to 16-bits
     obj.setframerate(fs)        # sets sample rate
