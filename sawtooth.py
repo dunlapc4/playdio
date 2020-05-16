@@ -13,7 +13,6 @@ def sawWav(fileName, duration, fs):
     data = bytearray()
     for i in range(int(duration * fs)):
         saw = signal.sawtooth(2)
-        # obj.writeframesraw(saw)
         data.extend(struct.pack('<h', int(saw)))
     print(type(saw))
     print(data)
