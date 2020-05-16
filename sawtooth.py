@@ -1,18 +1,27 @@
+# This is a synthesizer filter for adding sawtooth wave patterns
+# of a given duration and sample rate
+
+# The project might soon need directories that categorize filter types
+
 from scipy import signal
-from scipy.io import wavfile
-import wave
+import fileIO
+import struct
+import math
 
-def sawWav(fileName):
+def sawWav(fileName, duration, fs):
 
-    fs, data = wavfile.read(fileName + '.wav', 'r')
-    duration = len(data)/fs
-
-    obj = wave.open(fileName + '_sawtooth.wav', 'wb')
-    obj.setnchannels(1)  # set mono
-    obj.setsampwidth(2)  # set to 16-bits
-    obj.setframerate(fs)
-
+    data = bytearray()
     for i in range(int(duration * fs)):
         saw = signal.sawtooth(2)
-        obj.writeframesraw(saw)
-    obj.close()
+        # obj.writeframesraw(saw)
+        data.extend(struct.pack('<h', int(saw)))
+    print(type(saw))
+    print(data)
+
+    datas = bytearray()
+    for i in range(int(duration * fs)):
+        samp = signal.sawtooth(2 * math.pi * 5 * i)
+        datas.extend(struct.pack('<h', int(samp)))
+    print(datas)
+
+    fileIO.file_output(fileName, fs, datas)

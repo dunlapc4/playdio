@@ -8,7 +8,7 @@ import fileIO
 
 def delay(fileName, mix, feedback, tempo):
 
-    fs, data = wavfile.read(fileName + '.wav', 'r')
+    fs, frames = wavfile.read(fileName + '.wav', 'r')
 
     with wave.open(fileName + '.wav','rb') as wave_file:
         params = wave_file.getparams()
@@ -18,5 +18,8 @@ def delay(fileName, mix, feedback, tempo):
     beginning = b'\0'*offset
     end = audio_bytes[:-offset]
     data = add(audio_bytes, beginning+end, params.sampwidth)
+
+    print(type(data))
+    print(data)
 
     fileIO.file_output('delay', fs, data)

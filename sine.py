@@ -1,23 +1,21 @@
-import wave
+# This is a synthesizer filter for adding sine waves of a given
+# duration, sample rate and frequency
+
+# The project might soon need directories that categorize filter types
+
 import struct
 import math
 import fileIO
 
-def sinWav(fileName):
+def sinWav(fileName, duration, fs, freq, level):
 
-    fs = 48000.0                # Hz, sample rate
-    duration = 1.0              # time in seconds
-    freq = 440.0                # sine freq, Hz, f
-    maxVol = 32767.0            # Volume
-    quarterAmp = maxVol * .25   # Amplitude
+    maxVol = 32767.0        # max possible volume
+    amps = maxVol * level   # Amplitude
 
-    frame = bytearray()
+    data = bytearray()
     for i in range(int(duration * fs)):
-        sample = int(quarterAmp * math.sin(freq * math.pi * 2 * float(i) / float(fs)))
-        data = struct.pack('<h', sample)
-        frame.append('<h', sample)
-        print(type(data))
-
+        sample = int(amps * math.sin(freq * math.pi * 2 * float(i) / float(fs)))
+        data.extend(struct.pack('<h', sample))
 
     fileIO.file_output(fileName, fs, data)
 
