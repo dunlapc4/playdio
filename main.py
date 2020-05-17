@@ -11,7 +11,8 @@ level = .25             # percent of volume level
 
 sine.sinWav(fileName, duration, fs, freq, level)
 #sawtooth.sawWav(fileName, fs, freq)
-fileIO.combine_audio(fileName, audioTest)
+fileIO.blend_audio(fileName, audioTest)
+#fileIO.link_audio(fileName, audioTest)
 
 
 mix = .5        # dry & wet ratio of delay effect

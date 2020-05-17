@@ -6,34 +6,37 @@ def file_input(fileName):
 
     fs, data = wavfile.read('audioclips/' + fileName + '.wav', 'r')
 
-    obj = wave.open(fileName + '.wav', 'wb')
-    obj.setnchannels(1)     # sets mono
-    obj.setsampwidth(2)     # sets to 16-bits
-    obj.setframerate(fs)    # sets sample rate
+    w = wave.open(fileName + '.wav', 'wb')
+    w.setnchannels(1)     # sets mono
+    w.setsampwidth(2)     # sets to 16-bits
+    w.setframerate(fs)    # sets sample rate
 
-    return fs, data, obj
+    return fs, data, w
 
 def file_output(fileName, fs, data):
 
     numChan = 1
-    obj = wave.open('audioclips/' + fileName + '.wav', 'wb')
-    obj.setnchannels(numChan)   # sets mono
-    obj.setsampwidth(2)         # sets to 16-bits
-    obj.setframerate(fs)        # sets sample rate
+    w = wave.open('audioclips/' + fileName + '.wav', 'wb')
+    w.setnchannels(numChan)   # sets mono
+    w.setsampwidth(2)         # sets to 16-bits
+    w.setframerate(fs)        # sets sample rate
 
     bitDepth = 2                # seems to work. Thought it would be 16
 
     duration = len(data)/(fs * numChan * bitDepth)
 
-    obj.writeframesraw(data)
-    obj.close()
+    w.writeframesraw(data)
+    w.close()
 
-def combine_audio(file1, file2):
+
+# combines two audio files together as one simultaneous occurrence
+def blend_audio(file1, file2):
     # provide from:
     # https://stackoverflow.com/questions/4039158/mixing-two-audio-files-together-with-python
 
-    fnames =['audioclips/' + file1 + '.wav', 'audioclips/' + file2 + '.wav']
-    wavs = [wave.open(fn) for fn in fnames]
+    inFiles =['audioclips/' + file1 + '.wav', 'audioclips/' + file2 + '.wav']
+    outFile = 'audioclips/blend.wav'
+    wavs = [wave.open(fn) for fn in inFiles]
     frames = [w.readframes(w.getnframes()) for w in wavs]
 
     # here's efficient numpy conversion of the raw byte buffers
@@ -47,11 +50,34 @@ def combine_audio(file1, file2):
 
     #file_output('mix', 48000.0, mix)
 
+
     # Save the result
-    mix_wav = wave.open('audioclips/mix.wav', 'w')
-    mix_wav.setparams(wavs[0].getparams())
-    #print(type(mix_wav))
+    out = wave.open(outFile, 'w')
+    out.setparams(wavs[0].getparams())
 
     # before saving, we want to convert back to '<i2' bytes:
-    mix_wav.writeframes(mix.astype('<i2').tobytes())
-    mix_wav.close()
+    out.writeframes(mix.astype('<i2').tobytes())
+    out.close()
+
+def link_audio(file1, file2):
+    outFile = 'link'
+
+    w = wave.open('audioclips/' + file1 + '.wav', 'rb')
+    data1 = w.readframes(w.getnframes())
+    w.close()
+
+    w = wave.open('audioclips/' + file2 + '.wav', 'rb')
+    data2 = w.readframes(w.getnframes())
+    w.close()
+
+    w = wave.open('audioclips/' + file2 + '.wav', 'rb')
+    params = w.getparams()
+    w.close()
+
+    out = wave.open('audioclips/' + outFile + '.wav', 'wb')
+    out.setparams(params)
+    out.writeframes(data1)
+    out.writeframes(data2)
+    out.close()
+
+
