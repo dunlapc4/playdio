@@ -70,28 +70,34 @@ class Window(tk.Frame):
         # freq     = tk.DoubleVar()
         # level    = 1
 
-        tk.Label(sineWindow, text='name').grid(row=6)
+        tk.Label(sineWindow, text='name').pack()
         name = tk.Entry(sineWindow)
-        name.grid(row=6, column=1)
+        name.pack()
         fileName = name.get()
 
-        tk.Label(sineWindow, text='duration').grid(row=8)
-        length = tk.Entry(self)
-        length.grid(row=8, column=1)
+        tk.Label(sineWindow, text='duration').pack()
+        duration = tk.Scale(sineWindow, from_=0.0, to=20.0, orient=tk.HORIZONTAL)
+        duration.pack()
 
-        # duration = length.get()
 
-        fs = 48000.0
-        freq = 480.0
-        level = 1
+        tk.Label(sineWindow, text='sample rate').pack()
+        fs = tk.Scale(sineWindow, from_=8000.0, to=48000.0, orient=tk.HORIZONTAL)
+        fs.pack()
 
-        duration = 6.0
 
-        submitSine = tk.Button(sineWindow, text='Submit', width=10,
+        tk.Label(sineWindow, text='frequency').pack()
+        freq = tk.Scale(sineWindow, from_=20.0, to=1200.0, orient=tk.HORIZONTAL)
+        freq.pack()
+
+        tk.Label(sineWindow, text='sound level').pack()
+        level = tk.Scale(sineWindow, from_=0, to=100, orient=tk.HORIZONTAL)
+        level.pack()
+
+        submitSine = tk.Button(sineWindow, text='Submit',
                                command=sine.sinWav(str(fileName),
                                float(duration), float(fs), float(freq),
-                               int(level)))
-        submitSine.grid(row=9, column=9)
+                               int(level))).pack()
+        submitSine.pack()
 
 
 root = tk.Tk()
