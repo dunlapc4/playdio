@@ -82,9 +82,9 @@ class Window(tk.Frame):
         scaleLevel.pack()
 
         submitSine = tk.Button(sin, text='Submit',
-                               command=sine.sinWav(name.get(),
+                               command=lambda: sine.sinWav(name.get(),
                                duration.get(), fs.get(), freq.get(),
-                               level.get()))
+                               float(level.get()/100.0)))
         submitSine.pack()
 
 
