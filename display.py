@@ -59,44 +59,44 @@ class Window(tk.Frame):
         sample.grid(row=4, column=4)
         sample.pack()
 
-    def sine_window(self):
-        sineWindow = tk.Toplevel(app)
 
-        # sample input
-        # fields = 'fileName', 'duration', 'fs', 'freq', 'level'
-        # fileName = tk.StringVar()
-        # duration = tk.DoubleVar()
-        # fs       = tk.DoubleVar()
-        # freq     = tk.DoubleVar()
-        # level    = 1
+    def sine_window(self):
+
+        def submit_sine():
+            sine.sinWav(name.get(),
+                        duration.get(), fs.get(), freq.get(),
+                        level.get())
+
+        sineWindow = tk.Toplevel(app)
 
         tk.Label(sineWindow, text='name').pack()
         name = tk.Entry(sineWindow)
         name.pack()
-        fileName = name.get()
 
+        duration = tk.DoubleVar()
         tk.Label(sineWindow, text='duration').pack()
-        duration = tk.Scale(sineWindow, from_=0.0, to=20.0, orient=tk.HORIZONTAL)
-        duration.pack()
+        scaleDuration = tk.Scale(sineWindow, from_=0.0, to=20.0, variable=duration, orient=tk.HORIZONTAL)
+        scaleDuration.pack()
 
 
+        fs = tk.DoubleVar()
         tk.Label(sineWindow, text='sample rate').pack()
-        fs = tk.Scale(sineWindow, from_=8000.0, to=48000.0, orient=tk.HORIZONTAL)
-        fs.pack()
+        scaleFs = tk.Scale(sineWindow, from_=8000.0, to=48000.0, variable=fs, orient=tk.HORIZONTAL)
+        scaleFs.pack()
 
 
+        freq = tk.DoubleVar()
         tk.Label(sineWindow, text='frequency').pack()
-        freq = tk.Scale(sineWindow, from_=20.0, to=1200.0, orient=tk.HORIZONTAL)
-        freq.pack()
+        scaleFreq = tk.Scale(sineWindow, from_=20.0, to=1200.0, variable=freq, orient=tk.HORIZONTAL)
+        scaleFreq.pack()
 
+        level = tk.DoubleVar()
         tk.Label(sineWindow, text='sound level').pack()
-        level = tk.Scale(sineWindow, from_=0, to=100, orient=tk.HORIZONTAL)
-        level.pack()
+        scaleLevel = tk.Scale(sineWindow, from_=0, to=100, variable=level, orient=tk.HORIZONTAL)
+        scaleLevel.pack()
 
         submitSine = tk.Button(sineWindow, text='Submit',
-                               command=sine.sinWav(str(fileName),
-                               float(duration), float(fs), float(freq),
-                               int(level))).pack()
+                               command=self.submit_sine).pack()
         submitSine.pack()
 
 
