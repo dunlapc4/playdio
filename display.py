@@ -41,7 +41,21 @@ class Window(tk.Frame):
         w.pack()
 
 
+
+
 root = tk.Tk()
+root.iconbitmap('images/note.ico')
 root.geometry('800x500')
 app = Window(master = root)
+
+
+#text = tk.Text(root)
+#text.insert(tk.INSERT, "hello")
+#text.pack()
+
+stuff = tk.Label(app, text="stuff", bg="grey", fg="black")
+stuff.grid(row=0, column=0)
+#stuff.pack()
+
+
 app.mainloop()
