@@ -1,5 +1,5 @@
 import tkinter as tk
-from synth import sine
+from synth import sine, sawtooth
 
 
 class Window(tk.Frame):
@@ -41,9 +41,7 @@ class Window(tk.Frame):
         menu.add_cascade(label='Help', menu=help)
 
         # sine wave option window
-        #sineWindow = tk.Toplevel(master=self)
-
-        sineButton = tk.Button(text='Create a sine Wave',
+        sineButton = tk.Button(text='Create a synthesizer wave pattern',
                                command=self.create_sin)
         sineButton.pack()
 
@@ -81,11 +79,16 @@ class Window(tk.Frame):
         scaleLevel = tk.Scale(sin, from_=0, to=100, variable=level, orient=tk.HORIZONTAL)
         scaleLevel.pack()
 
-        submitSine = tk.Button(sin, text='Submit',
+        createSine = tk.Button(sin, text='create sine wave',
                                command=lambda: sine.sinWav(name.get(),
                                duration.get(), fs.get(), freq.get(),
                                float(level.get()/100.0)))
-        submitSine.pack()
+        createSine.pack()
+
+
+        createSaw = tk.Button(sin, text='create sawtooth wave',
+                               command=lambda: sawtooth.sawWav(name.get(), fs.get(), freq.get()))
+        createSaw.pack()
 
 
     def client_exit(self):
