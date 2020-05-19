@@ -1,5 +1,6 @@
 import tkinter as tk
 from synth import sine, sawtooth
+import fileIO
 
 
 class Window(tk.Frame):
@@ -40,59 +41,87 @@ class Window(tk.Frame):
                          command=self.about_window)
         menu.add_cascade(label='Help', menu=help)
 
-        # sine wave option window
+        # synthesizer option window
         sineButton = tk.Button(text='Create a synthesizer wave pattern',
-                               command=self.create_sin)
+                               command=self.create_synth)
         sineButton.pack()
 
-    def create_sin(self):
-        sin = tk.Toplevel()
-        sin.iconbitmap('images/note.ico')
-        sin.geometry('300x350')
-        sin.title("sine settings")
 
-        tk.Label(sin, text='name').pack()
-        name = tk.Entry(sin)
+        mergeButton = tk.Button(text='merge audio files',
+                               command=self.merge_audio)
+        mergeButton.pack()
+
+    def create_synth(self):
+        s = tk.Toplevel()
+        s.iconbitmap('images/note.ico')
+        s.geometry('300x350')
+        s.title("synthesizer settings")
+
+        tk.Label(s, text='name').pack()
+        name = tk.Entry(s)
         name.pack()
 
         # duration of clip
         duration = tk.DoubleVar()
-        tk.Label(sin, text='duration').pack()
-        scaleDuration = tk.Scale(sin, from_=0.0, to=20.0, variable=duration, orient=tk.HORIZONTAL)
+        tk.Label(s, text='duration').pack()
+        scaleDuration = tk.Scale(s, from_=0.0, to=20.0, variable=duration, orient=tk.HORIZONTAL)
         scaleDuration.pack()
 
         # sample rate
         fs = tk.DoubleVar()
-        tk.Label(sin, text='sample rate').pack()
-        scaleFs = tk.Scale(sin, from_=8000.0, to=48000.0, variable=fs, orient=tk.HORIZONTAL)
+        tk.Label(s, text='sample rate').pack()
+        scaleFs = tk.Scale(s, from_=8000.0, to=48000.0, variable=fs, orient=tk.HORIZONTAL)
         scaleFs.pack()
 
         # frequency of wave length
         freq = tk.DoubleVar()
-        tk.Label(sin, text='frequency').pack()
-        scaleFreq = tk.Scale(sin, from_=20.0, to=1200.0, variable=freq, orient=tk.HORIZONTAL)
+        tk.Label(s, text='frequency').pack()
+        scaleFreq = tk.Scale(s, from_=20.0, to=1200.0, variable=freq, orient=tk.HORIZONTAL)
         scaleFreq.pack()
 
         # amplitude of wave
         level = tk.DoubleVar()
-        tk.Label(sin, text='sound level').pack()
-        scaleLevel = tk.Scale(sin, from_=0, to=100, variable=level, orient=tk.HORIZONTAL)
+        tk.Label(s, text='sound level').pack()
+        scaleLevel = tk.Scale(s, from_=0, to=100, variable=level, orient=tk.HORIZONTAL)
         scaleLevel.pack()
 
-        createSine = tk.Button(sin, text='create sine wave',
+        createSine = tk.Button(s, text='create sine wave',
                                command=lambda: sine.sinWav(name.get(),
                                duration.get(), fs.get(), freq.get(),
                                float(level.get()/100.0)))
         createSine.pack()
 
 
-        createSaw = tk.Button(sin, text='create sawtooth wave',
+        createSaw = tk.Button(s, text='create sawtooth wave',
                                command=lambda: sawtooth.sawWav(name.get(), fs.get(), freq.get()))
         createSaw.pack()
 
+    def merge_audio(self):
+        m = tk.Toplevel()
+        m.iconbitmap('images/note.ico')
+        m.geometry('300x350')
+        m.title("synthesizer settings")
+
+
+        tk.Label(m, text='First file name').pack()
+        audioA = tk.Entry(m)
+        audioA.pack()
+
+        tk.Label(m, text='Second file name').pack()
+        audioB = tk.Entry(m)
+        audioB.pack()
+
+        blend = tk.Button(m, text='Blend audio sample together',
+                              command=lambda: fileIO.blend_audio(audioA.get(), audioB.get()))
+        blend.pack()
+
+        link = tk.Button(m, text='link audio samples together in sequence',
+                          command=lambda: fileIO.link_audio(audioA.get(), audioB.get()))
+        link.pack()
+
 
     def client_exit(self):
-        exit()
+            exit()
 
     def about_window(self):
         aboutWindow = tk.Toplevel(app)
