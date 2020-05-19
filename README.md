@@ -14,6 +14,7 @@ Digital effect ideas:<br />
 &nbsp;&nbsp;&nbsp; Delay effect<br />
 &nbsp;&nbsp;&nbsp; Reverb effect<br />
 &nbsp;&nbsp;&nbsp; Cutoff and resonance filter
+&nbsp;&nbsp;&nbsp; Chaining of existing effects
 
 ## Installation
 
