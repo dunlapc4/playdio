@@ -1,6 +1,8 @@
 import tkinter as tk
 from synth import sine, sawtooth
+from effect import delay
 import fileIO
+
 
 
 class Window(tk.Frame):
@@ -42,14 +44,20 @@ class Window(tk.Frame):
         menu.add_cascade(label='Help', menu=help)
 
         # synthesizer option window
-        sineButton = tk.Button(text='Create a synthesizer wave pattern',
+        sineButton = tk.Button(text='synthesizer menu',
                                command=self.create_synth)
         sineButton.pack()
 
+        # effects menu
+        effectButton = tk.Button(text='effects menu',
+                                 command=self.create_effect)
+        effectButton.pack()
 
+        # merge audio menu
         mergeButton = tk.Button(text='merge audio files',
                                command=self.merge_audio)
         mergeButton.pack()
+
 
     def create_synth(self):
         s = tk.Toplevel()
@@ -96,11 +104,34 @@ class Window(tk.Frame):
                                command=lambda: sawtooth.sawWav(name.get(), fs.get(), freq.get()))
         createSaw.pack()
 
+    def create_effect(self):
+        e = tk.Toplevel()
+        e.iconbitmap('images/note.ico')
+        e.geometry('300x350')
+        e.title("effects settings")
+
+        tk.Label(e, text='name').pack()
+        name = tk.Entry(e)
+        name.pack()
+
+        mix = 0
+        feedback = 0
+
+        # delay in milliseconds
+        tempo = tk.IntVar()
+        tk.Label(e, text='tempo').pack()
+        scaleTempo = tk.Scale(e, from_=0, to=1000, variable=tempo, orient=tk.HORIZONTAL)
+        scaleTempo.pack()
+
+        blend = tk.Button(e, text='Blend audio sample together',
+                          command=lambda: delay.delay(name.get(), mix, feedback, tempo.get()))
+        blend.pack()
+
     def merge_audio(self):
         m = tk.Toplevel()
         m.iconbitmap('images/note.ico')
         m.geometry('300x350')
-        m.title("synthesizer settings")
+        m.title("merge settings")
 
 
         tk.Label(m, text='First file name').pack()
