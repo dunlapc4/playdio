@@ -10,7 +10,7 @@ import os
 class Window(tk.Frame):
 
     def __init__(self, master=None):
-        tk.Frame.__init__(self, master)A
+        tk.Frame.__init__(self, master)
         self.master = master
         self.init_window()
 
