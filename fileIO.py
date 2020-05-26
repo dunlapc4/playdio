@@ -4,7 +4,8 @@ import numpy as np
 
 def file_input(fileName):
 
-    fs, data = wavfile.read('audioclips/' + fileName + '.wav', 'r')
+    #fs, data = wavfile.read('audioclips/' + fileName + '.wav', 'r')
+    fs, data = wavfile.read('audioclips/' + fileName, 'r')
 
     w = wave.open(fileName + '.wav', 'wb')
     w.setnchannels(1)     # sets mono
@@ -15,8 +16,13 @@ def file_input(fileName):
 
 def file_output(fileName, fs, data):
 
+    length = len(fileName)
+    if(fileName[length-4] != '.' or fileName[length-3] != 'w' or fileName[length-2] != 'a' or fileName[length-1] != 'v'):
+        fileName = fileName + '.wav'
+
     numChan = 1
-    w = wave.open('audioclips/' + fileName + '.wav', 'wb')
+    #w = wave.open('audioclips/' + fileName + '.wav', 'wb')
+    w = wave.open('audioclips/' + fileName, 'wb')
     w.setnchannels(numChan)   # sets mono
     w.setsampwidth(2)         # sets to 16-bits
     w.setframerate(fs)        # sets sample rate
@@ -34,7 +40,8 @@ def blend_audio(file1, file2):
     # provide from:
     # https://stackoverflow.com/questions/4039158/mixing-two-audio-files-together-with-python
 
-    inFiles =['audioclips/' + file1 + '.wav', 'audioclips/' + file2 + '.wav']
+    #inFiles =['audioclips/' + file1 + '.wav', 'audioclips/' + file2 + '.wav']
+    inFiles =['audioclips/' + file1, 'audioclips/' + file2]
     outFile = 'audioclips/blend.wav'
     wavs = [wave.open(fn) for fn in inFiles]
     frames = [w.readframes(w.getnframes()) for w in wavs]
@@ -62,15 +69,18 @@ def blend_audio(file1, file2):
 def link_audio(file1, file2):
     outFile = 'link'
 
-    w = wave.open('audioclips/' + file1 + '.wav', 'rb')
+    #w = wave.open('audioclips/' + file1 + '.wav', 'rb')
+    w = wave.open('audioclips/' + file1, 'rb')
     data1 = w.readframes(w.getnframes())
     w.close()
 
-    w = wave.open('audioclips/' + file2 + '.wav', 'rb')
+    #w = wave.open('audioclips/' + file2 + '.wav', 'rb')
+    w = wave.open('audioclips/' + file2, 'rb')
     data2 = w.readframes(w.getnframes())
     w.close()
 
-    w = wave.open('audioclips/' + file2 + '.wav', 'rb')
+    #w = wave.open('audioclips/' + file2 + '.wav', 'rb')
+    w = wave.open('audioclips/' + file2, 'rb')
     params = w.getparams()
     w.close()
 

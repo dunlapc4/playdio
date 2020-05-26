@@ -74,7 +74,7 @@ class Window(tk.Frame):
         s.geometry('300x350')
         s.title("synthesizer settings")
 
-        tk.Label(s, text='name').pack()
+        tk.Label(s, text='Name for the file to be created').pack()
         name = tk.Entry(s)
         name.pack()
 
@@ -119,8 +119,9 @@ class Window(tk.Frame):
         e.geometry('300x350')
         e.title("effects settings")
 
-        tk.Label(e, text='name').pack()
-        name = tk.Entry(e)
+        tk.Label(e, text='Select a file to edit').pack()
+        list = os.listdir('audioclips/')
+        name = ttk.Combobox(e, values=list)
         name.pack()
 
         mix = 0
@@ -157,20 +158,19 @@ class Window(tk.Frame):
         m.title("merge settings")
 
 
-        tk.Label(m, text='First file name').pack()
-        audioA = tk.Entry(m)
-        audioA.pack()
-
-        tk.Label(m, text='Second file name').pack()
-        audioB = tk.Entry(m)
-        audioB.pack()
+        tk.Label(m, text='Select two files to be edited together').pack()
+        audioList = os.listdir('audioclips/')
+        listA = ttk.Combobox(m, values=audioList)
+        listA.pack()
+        listB = ttk.Combobox(m, values=audioList)
+        listB.pack()
 
         blend = tk.Button(m, text='Blend audio sample together',
-                              command=lambda: fileIO.blend_audio(audioA.get(), audioB.get()))
+                              command=lambda: fileIO.blend_audio(listA.get(), listB.get()))
         blend.pack()
 
         link = tk.Button(m, text='link audio samples together in sequence',
-                          command=lambda: fileIO.link_audio(audioA.get(), audioB.get()))
+                          command=lambda: fileIO.link_audio(listA.get(), listB.get()))
         link.pack()
 
 
