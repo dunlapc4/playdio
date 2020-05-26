@@ -147,7 +147,13 @@ class Window(tk.Frame):
         list = ttk.Combobox(p, values=fileList)
         list.pack()
 
-        play = tk.Button(p, text='play',
+
+        # had to add "label", so that tkinter doesn't memory dump the image
+        play = tk.PhotoImage(file="images/play.png")
+        label = tk.Label(image=play)
+        label.image = play
+        #label.pack()
+        play = tk.Button(p, image=play,
                           command=lambda: player.playTrack(list.get()))
         play.pack()
 
