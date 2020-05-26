@@ -25,6 +25,7 @@ pip install scipy
 pip install wave
 pip install playsound
 ```
+The current build needs to be assembled from display.py
 
 # Contributors
 
