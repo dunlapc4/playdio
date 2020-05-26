@@ -80,24 +80,28 @@ class Window(tk.Frame):
 
         # duration of clip
         duration = tk.DoubleVar()
+        duration.set(5.0)
         tk.Label(s, text='duration').pack()
         scaleDuration = tk.Scale(s, from_=0.0, to=20.0, variable=duration, orient=tk.HORIZONTAL)
         scaleDuration.pack()
 
         # sample rate
         fs = tk.DoubleVar()
+        fs.set(48000.0)
         tk.Label(s, text='sample rate').pack()
         scaleFs = tk.Scale(s, from_=8000.0, to=48000.0, variable=fs, orient=tk.HORIZONTAL)
         scaleFs.pack()
 
         # frequency of wave length
         freq = tk.DoubleVar()
+        freq.set(480)
         tk.Label(s, text='frequency').pack()
         scaleFreq = tk.Scale(s, from_=20.0, to=1200.0, variable=freq, orient=tk.HORIZONTAL)
         scaleFreq.pack()
 
         # amplitude of wave
         level = tk.DoubleVar()
+        level.set(100)
         tk.Label(s, text='sound level').pack()
         scaleLevel = tk.Scale(s, from_=0, to=100, variable=level, orient=tk.HORIZONTAL)
         scaleLevel.pack()
@@ -129,6 +133,7 @@ class Window(tk.Frame):
 
         # delay in milliseconds
         tempo = tk.IntVar()
+        tempo.set(1000)
         tk.Label(e, text='tempo').pack()
         scaleTempo = tk.Scale(e, from_=0, to=1000, variable=tempo, orient=tk.HORIZONTAL)
         scaleTempo.pack()
@@ -152,7 +157,6 @@ class Window(tk.Frame):
         play = tk.PhotoImage(file="images/play.png")
         label = tk.Label(image=play)
         label.image = play
-        #label.pack()
         play = tk.Button(p, image=play,
                           command=lambda: player.playTrack(list.get()))
         play.pack()
