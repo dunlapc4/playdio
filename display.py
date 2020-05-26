@@ -56,7 +56,7 @@ class Window(tk.Frame):
 
 
  Welcome to our digital audio effects sandbox!
-Feel free to sample what we have so far in the "Edit" Menu option
+Feel free to sample what we have so far in the "Edit" options menu
 
 
 
@@ -146,6 +146,11 @@ Feel free to sample what we have so far in the "Edit" Menu option
         name = ttk.Combobox(e, values=list)
         name.pack()
 
+
+        tk.Label(e, text='Name for audio file:').pack()
+        fname = tk.Entry(e)
+        fname.pack()
+
         mix = 0
         feedback = 0
 
@@ -160,7 +165,7 @@ Feel free to sample what we have so far in the "Edit" Menu option
 
         blend = tk.Button(e, text='Blend audio sample together',
                           command=lambda : delay.delay(name.get(), mix,
-                          feedback, tempo.get()))
+                          feedback, tempo.get(), fname.get()))
         blend.pack()
 
     def merge_audio(self):

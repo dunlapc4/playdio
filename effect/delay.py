@@ -6,7 +6,11 @@ import fileIO
 #currently following along with this work:
 #http://andrewslotnick.com/posts/audio-delay-with-python.html
 
-def delay(fileName, mix, feedback, tempo):
+def delay(fileName, mix, feedback, tempo, fname):
+
+    length = len(fname)
+    if(fname[length-4] != '.' or fname[length-3] != 'w' or fname[length-2] != 'a' or fname[length-1] != 'v'):
+        fname = fname + '.wav'
 
     fs, frames = wavfile.read('audioclips/' + fileName, 'r')
 
@@ -19,4 +23,4 @@ def delay(fileName, mix, feedback, tempo):
     end = audio_bytes[:-offset]
     data = add(audio_bytes, beginning+end, params.sampwidth)
 
-    fileIO.file_output('delay.wav', fs, data)
+    fileIO.file_output(fname, fs, data)
