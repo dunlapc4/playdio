@@ -56,7 +56,7 @@ class Window(tk.Frame):
 
 
  Welcome to our digital audio effects sandbox!
-Feel free to sample what we have so far in the "Edit"
+Feel free to sample what we have so far in the "Edit" Menu option
 
 
 
@@ -79,61 +79,61 @@ Feel free to sample what we have so far in the "Edit"
     def create_synth(self):
         s = tk.Toplevel()
         s.iconbitmap('images/note.ico')
-        s.geometry('300x350')
+        s.geometry('300x225')
         s.title('synthesizer settings')
 
-        tk.Label(s, text='Name for the file to be created').pack()
+        tk.Label(s, text='Name for audio file:').grid(row=1)
         name = tk.Entry(s)
-        name.pack()
+        name.grid(row=1, column=1)
 
         # duration of clip
 
         duration = tk.DoubleVar()
         duration.set(5.0)
-        tk.Label(s, text='duration').pack()
+        tk.Label(s, text='duration').grid(row=3)
         scaleDuration = tk.Scale(s, from_=0.0, to=20.0,
                                  variable=duration,
                                  orient=tk.HORIZONTAL)
-        scaleDuration.pack()
+        scaleDuration.grid(row=3, column=1)
 
         # sample rate
 
         fs = tk.DoubleVar()
         fs.set(48000.0)
-        tk.Label(s, text='sample rate').pack()
+        tk.Label(s, text='sample rate').grid(row=5)
         scaleFs = tk.Scale(s, from_=8000.0, to=48000.0, variable=fs,
                            orient=tk.HORIZONTAL)
-        scaleFs.pack()
+        scaleFs.grid(row=5, column=1)
 
         # frequency of wave length
 
         freq = tk.DoubleVar()
         freq.set(480)
-        tk.Label(s, text='frequency').pack()
+        tk.Label(s, text='frequency').grid(row=7)
         scaleFreq = tk.Scale(s, from_=20.0, to=1200.0, variable=freq,
                              orient=tk.HORIZONTAL)
-        scaleFreq.pack()
+        scaleFreq.grid(row=7, column=1)
 
         # amplitude of wave
 
         level = tk.DoubleVar()
         level.set(100)
-        tk.Label(s, text='sound level').pack()
+        tk.Label(s, text='sound level').grid(row=9)
         scaleLevel = tk.Scale(s, from_=0, to=100, variable=level,
                               orient=tk.HORIZONTAL)
-        scaleLevel.pack()
+        scaleLevel.grid(row=9, column=1)
 
-        createSine = tk.Button(s, text='create sine wave',
+        createSine = tk.Button(s, text='save as sine wave',
                                command=lambda : sine.sinWav(name.get(),
                                duration.get(), fs.get(), freq.get(),
                                float(level.get() / 100.0)))
-        createSine.pack()
+        createSine.grid(row=12, column=0)
 
-        createSaw = tk.Button(s, text='create sawtooth wave',
+        createSaw = tk.Button(s, text='save as sawtooth wave',
                               command=lambda : \
                               sawtooth.sawWav(name.get(), fs.get(),
                               freq.get()))
-        createSaw.pack()
+        createSaw.grid(row=12, column=1)
 
     def create_effect(self):
         e = tk.Toplevel()
@@ -166,34 +166,42 @@ Feel free to sample what we have so far in the "Edit"
     def merge_audio(self):
         m = tk.Toplevel()
         m.iconbitmap('images/note.ico')
-        m.geometry('300x350')
+        m.geometry('650x100')
         m.title('merge settings')
 
-        tk.Label(m, text='Select two files to be edited together'
-                 ).pack()
+        tk.Label(m, text='Select two files to be edited together:'
+                 ).grid(row=1, column=0)
         audioList = os.listdir('audioclips/')
         listA = ttk.Combobox(m, values=audioList)
-        listA.pack()
+        listA.grid(row=1, column=1)
         listB = ttk.Combobox(m, values=audioList)
-        listB.pack()
+        listB.grid(row=1, column=2)
+
+
+        tk.Label(m, text='Name for audio file:').grid(row=3)
+        name = tk.Entry(m)
+        name.grid(row=3, column=1)
+
 
         blend = tk.Button(m, text='Blend audio sample together',
                           command=lambda : \
-                          fileIO.blend_audio(listA.get(), listB.get()))
-        blend.pack()
+                          fileIO.blend_audio(listA.get(), listB.get(), name.get()))
+        blend.grid(row=4, column=1)
 
         link = tk.Button(m,
                          text='link audio samples together in sequence'
                          , command=lambda : \
-                         fileIO.link_audio(listA.get(), listB.get()))
-        link.pack()
+                         fileIO.link_audio(listA.get(), listB.get(), name.get()))
+        link.grid(row=4, column=2)
 
     def client_exit(self):
         exit()
 
     def about_window(self):
         aboutWindow = tk.Toplevel(app)
-        w = tk.Label(aboutWindow, text='Playdio 0.1.0')
+        aboutWindow.iconbitmap('images/note.ico')
+        aboutWindow.title('About Playdio')
+        w = tk.Label(aboutWindow, text='\nPlaydio 0.1.0\n\nDevelopers:\nChristopher Teters\nConor Dunlap')
         w.pack()
 
     def text_field(self):
