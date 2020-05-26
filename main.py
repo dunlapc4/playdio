@@ -1,27 +1,9 @@
-from effect import delay
-from synth import sine, sawtooth
-import fileIO
-import os
+import tkinter as tk
+import display
 
-fileName = 'sample'
-audioTest = 'gc'
-duration = 5.0          # length in seconds
-fs = 48000.0            # sample rate, Hz
-freq = 480              # sine freq, Hz, f
-level = .25             # percent of volume level
+root = tk.Tk()
+root.iconbitmap('images/note.ico')
+root.geometry('500x300')
+app = display.Window(master=root)
 
-#sine.sinWav(fileName, duration, fs, freq, level)
-#sawtooth.sawWav(fileName, fs, freq)
-#fileIO.blend_audio(fileName, audioTest)
-#fileIO.link_audio(fileName, audioTest)
-
-
-mix = .5        # dry & wet ratio of delay effect
-feedback = 1    # number of repeats made
-tempo = 1000    # time delay in milliseconds
-#delay.delay('gc', mix, feedback, tempo)
-
-#playsound('sample' + '.wav')
-
-print(os.listdir('audioclips/'))
-
+app.mainloop()

@@ -203,7 +203,7 @@ Feel free to sample what we have so far in the "Edit" options menu
         exit()
 
     def about_window(self):
-        aboutWindow = tk.Toplevel(app)
+        aboutWindow = tk.Toplevel(self)
         aboutWindow.iconbitmap('images/note.ico')
         aboutWindow.title('About Playdio')
         w = tk.Label(aboutWindow, text='\nPlaydio 0.1.0\n\nDevelopers:\nChristopher Teters\nConor Dunlap')
@@ -215,9 +215,3 @@ Feel free to sample what we have so far in the "Edit" options menu
         sample.pack()
 
 
-root = tk.Tk()
-root.iconbitmap('images/note.ico')
-root.geometry('500x300')
-app = Window(master=root)
-
-app.mainloop()
