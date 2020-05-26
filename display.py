@@ -1,7 +1,10 @@
 import tkinter as tk
+from tkinter import ttk
 from synth import sine, sawtooth
 from effect import delay
 import fileIO
+import player
+import os
 
 
 
@@ -57,6 +60,12 @@ class Window(tk.Frame):
         mergeButton = tk.Button(text='merge audio files',
                                command=self.merge_audio)
         mergeButton.pack()
+
+
+        # play audio menu
+        playerButton = tk.Button(text='play audio file',
+                                command=self.play_audio)
+        playerButton.pack()
 
 
     def create_synth(self):
@@ -126,6 +135,20 @@ class Window(tk.Frame):
         blend = tk.Button(e, text='Blend audio sample together',
                           command=lambda: delay.delay(name.get(), mix, feedback, tempo.get()))
         blend.pack()
+
+    def play_audio(self):
+        p = tk.Toplevel()
+        p.iconbitmap('images/note.ico')
+        p.geometry('300x350')
+        p.title("merge settings")
+
+        fileList = os.listdir('audioclips/')
+        list = ttk.Combobox(p, values=fileList)
+        list.pack()
+
+        play = tk.Button(p, text='play',
+                          command=lambda: player.playTrack(list.get()))
+        play.pack()
 
     def merge_audio(self):
         m = tk.Toplevel()

@@ -1,6 +1,7 @@
 from effect import delay
 from synth import sine, sawtooth
 import fileIO
+import os
 
 fileName = 'sample'
 audioTest = 'gc'
@@ -9,9 +10,9 @@ fs = 48000.0            # sample rate, Hz
 freq = 480              # sine freq, Hz, f
 level = .25             # percent of volume level
 
-sine.sinWav(fileName, duration, fs, freq, level)
+#sine.sinWav(fileName, duration, fs, freq, level)
 #sawtooth.sawWav(fileName, fs, freq)
-fileIO.blend_audio(fileName, audioTest)
+#fileIO.blend_audio(fileName, audioTest)
 #fileIO.link_audio(fileName, audioTest)
 
 
@@ -21,3 +22,6 @@ tempo = 1000    # time delay in milliseconds
 #delay.delay('gc', mix, feedback, tempo)
 
 #playsound('sample' + '.wav')
+
+print(os.listdir('audioclips/'))
+
