@@ -13,11 +13,16 @@ def file_input(fileName):
 
     return fs, data, w
 
-def file_output(fileName, fs, data):
-
+def extentsion_check(fileName):
     length = len(fileName)
     if(fileName[length-4] != '.' or fileName[length-3] != 'w' or fileName[length-2] != 'a' or fileName[length-1] != 'v'):
-        fileName = fileName + '.wav'
+        return fileName + '.wav'
+    else:
+        return fileName
+
+def file_output(fileName, fs, data):
+
+    fileName = extentsion_check(fileName)
 
     numChan = 1
     w = wave.open('audioclips/' + fileName, 'wb')
@@ -39,9 +44,7 @@ def blend_audio(file1, file2, fileName):
     # https://stackoverflow.com/questions/4039158/mixing-two-audio-files-together-with-python
 
     inFiles =['audioclips/' + file1, 'audioclips/' + file2]
-    length = len(fileName)
-    if(fileName[length-4] != '.' or fileName[length-3] != 'w' or fileName[length-2] != 'a' or fileName[length-1] != 'v'):
-        fileName = fileName + '.wav'
+    fileName = extentsion_check(fileName)
     outFile = 'audioclips/' + fileName
     wavs = [wave.open(fn) for fn in inFiles]
     frames = [w.readframes(w.getnframes()) for w in wavs]
@@ -68,9 +71,7 @@ def blend_audio(file1, file2, fileName):
 
 def link_audio(file1, file2, outFile):
 
-    length = len(outFile)
-    if(outFile[length-4] != '.' or outFile[length-3] != 'w' or outFile[length-2] != 'a' or outFile[length-1] != 'v'):
-        outFile = outFile + '.wav'
+    outFile = extentsion_check(outFile)
 
     w = wave.open('audioclips/' + file1, 'rb')
     data1 = w.readframes(w.getnframes())
