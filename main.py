@@ -3,7 +3,7 @@ import display
 
 root = tk.Tk()
 root.iconbitmap('images/note.ico')
-root.geometry('500x300')
+root.geometry('700x400')
 app = display.Window(master=root)
 
 app.mainloop()

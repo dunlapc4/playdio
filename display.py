@@ -5,6 +5,30 @@ from effect import delay
 import fileIO
 import player
 import os
+import math
+import struct
+import simpleaudio as sa
+
+
+def chord(MIDI):
+
+    fs = 48000.0
+    duration = .25
+    maxVol = 32767.0
+    amplitude = maxVol * (1/6)
+    freq = 440.0
+
+    note = math.pow(2,(MIDI-69)/12)*freq
+
+    data = bytearray()
+    for i in range(int(duration * fs)):
+        sample = int(amplitude * math.sin(note * math.pi * 2 * float(i) / float(fs)))
+        data.extend(struct.pack('<h', sample))
+
+    play_obj = sa.play_buffer(data, 1, 2, 48000)
+    play_obj.wait_done()
+
+
 
 
 class Window(tk.Frame):
@@ -13,6 +37,7 @@ class Window(tk.Frame):
         tk.Frame.__init__(self, master)
         self.master = master
         self.init_window()
+        self.keyboard()
 
     def init_window(self):
         self.master.title('playdio')
@@ -48,6 +73,10 @@ class Window(tk.Frame):
         help.add_command(label='About Playdio...',
                          command=self.about_window)
         menu.add_cascade(label='Help', menu=help)
+
+
+
+
 
         tk.Label(text='''
 
@@ -215,3 +244,56 @@ Feel free to sample what we have so far in the "Edit" options menu
         sample.pack()
 
 
+    def keyboard(self):
+        self.master.title('keyboard')
+
+        C = tk.Button(bg='white', height = 11, width = 5, command=lambda : chord(72))
+        C.place(relx=0.00)
+        D = tk.Button(bg='white', height = 11, width = 5, command=lambda : chord(74))
+        D.place(relx=0.066)
+        E = tk.Button(bg='white', height = 11, width = 5, command=lambda : chord(76))
+        E.place(relx=0.132)
+        F = tk.Button(bg='white', height = 11, width = 5, command=lambda : chord(77))
+        F.place(relx=0.198)
+        G = tk.Button(bg='white', height = 11, width = 5, command=lambda : chord(79))
+        G.place(relx=0.264)
+        A = tk.Button(bg='white', height = 11, width = 5, command=lambda : chord(81))
+        A.place(relx=0.33)
+        B = tk.Button(bg='white', height = 11, width = 5, command=lambda : chord(83))
+        B.place(relx=0.396)
+        C = tk.Button(bg='white', height = 11, width = 5, command=lambda : chord(84))
+        C.place(relx=0.462)
+        D = tk.Button(bg='white', height = 11, width = 5, command=lambda : chord(86))
+        D.place(relx=0.528)
+        E = tk.Button(bg='white',  height = 11, width = 5,command=lambda : chord(88))
+        E.place(relx=0.594)
+        F = tk.Button(bg='white', height = 11, width = 5, command=lambda : chord(89))
+        F.place(relx=0.66)
+        G = tk.Button(bg='white', height = 11, width = 5, command=lambda : chord(91))
+        G.place(relx=0.726)
+        A = tk.Button(bg='white',  height = 11, width = 5,command=lambda : chord(93))
+        A.place(relx=0.792)
+        B = tk.Button(bg='white', height = 11, width = 5, command=lambda : chord(95))
+        B.place(relx=0.858)
+        C = tk.Button(bg='white',  height = 11, width = 5,command=lambda : chord(96))
+        C.place(relx=0.924)
+        C = tk.Button(text='C#', bg='black', height = 7, width = 3, command=lambda : chord(73))
+        C.place(relx=0.033)
+        D = tk.Button(text='D#', bg='black', height = 7, width = 3, command=lambda : chord(75))
+        D.place(relx=0.099)
+        F = tk.Button(text='F#', bg='black', height = 7, width = 3, command=lambda : chord(78))
+        F.place(relx=0.231)
+        G = tk.Button(text='G#', bg='black', height = 7, width = 3, command=lambda : chord(80))
+        G.place(relx=0.297)
+        A = tk.Button(text='A#', bg='black', height = 7, width = 3, command=lambda : chord(82))
+        A.place(relx=0.363)
+        C = tk.Button(text='C#', bg='black', height = 7, width = 3, command=lambda : chord(85))
+        C.place(relx=0.495)
+        D = tk.Button(text='D#', bg='black',  height = 7, width = 3,command=lambda : chord(87))
+        D.place(relx=0.561)
+        F = tk.Button(text='F#', bg='black', height = 7, width = 3, command=lambda : chord(90))
+        F.place(relx=0.693)
+        G = tk.Button(text='G#', bg='black', height = 7, width = 3, command=lambda : chord(92))
+        G.place(relx=0.759)
+        A = tk.Button(text='A#', bg='black', height = 7, width = 3, command=lambda : chord(94))
+        A.place(relx=0.825)
